@@ -9,13 +9,12 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
-            --stadium-dark: #070f0d; /* Tono más oscuro para el fondo */
+            --stadium-dark: #070f0d;
             --grass-bright: #2ecc71;
             --accent-gold: #f39c12;
             --accent-cyan: #00d9ff;
             --white: #ffffff;
-            /* Cartas con más contraste para destacar sobre la imagen */
-            --card-bg: rgba(7, 15, 13, 0.95);
+            --card-bg: rgba(7, 15, 13, 0.9);
             --verde-whatsapp: #25d366;
         }
 
@@ -26,127 +25,85 @@
             min-height: 100vh;
         }
 
-        /* FONTO DE ESTADIO ACTUALIZADO */
+        /* FONDO CON TU IMAGEN DE ESTADIO */
         .stadium-background {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             z-index: -2;
-            /* IMAGEN DE FONDO */
-            background-image: url('https://images.unsplash.com/photo-1521537634199-67368c74c032?q=80&w=2070');
+            background-image: url('https://xbotgo.com/cdn/shop/articles/biggest_soccer_stadium_in_the_world.png?v=1755680666&width=800');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            background-attachment: fixed; /* Efecto Paralaje */
+            background-attachment: fixed;
         }
 
-        /* Superposición oscura para que se lea el texto */
         .stadium-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             z-index: -1;
-            background: linear-gradient(180deg, rgba(7, 15, 13, 0.85) 0%, rgba(7, 15, 13, 1) 100%);
+            background: linear-gradient(180deg, rgba(7, 15, 13, 0.75) 0%, rgba(7, 15, 13, 0.95) 100%);
         }
 
         .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; text-align: center; }
 
         .logo {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 80px;
+            font-family: 'Bebas Neue', sans-serif; font-size: 80px;
             background: linear-gradient(135deg, var(--grass-bright), var(--accent-cyan));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 5px;
-            text-shadow: 0 0 20px rgba(46, 204, 113, 0.5);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            margin-bottom: 5px; filter: drop-shadow(0 0 10px rgba(0,217,255,0.4));
         }
 
         .tagline { color: var(--accent-gold); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 40px; font-weight: bold; }
 
-        /* Grid de Categorías */
         .catalog-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-bottom: 50px;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px; margin-bottom: 50px;
         }
 
         .category-card {
-            background: var(--card-bg);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 15px;
-            padding: 30px;
-            cursor: pointer;
-            transition: 0.3s;
-            backdrop-filter: blur(5px); /* Efecto cristal */
+            background: var(--card-bg); border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 15px; padding: 30px; cursor: pointer; transition: 0.3s;
+            backdrop-filter: blur(10px);
         }
 
-        .category-card:hover { border-color: var(--grass-bright); transform: translateY(-5px); box-shadow: 0 10px 30px rgba(46, 204, 113, 0.2); }
+        .category-card:hover { border-color: var(--grass-bright); transform: translateY(-5px); }
         .category-icon { font-size: 40px; display: block; margin-bottom: 10px; }
         .category-title { font-family: 'Bebas Neue', sans-serif; font-size: 28px; }
 
-        /* Listas de Canales */
         .channel-list {
-            display: none;
-            background: rgba(0,0,0,0.8);
-            margin-top: 15px;
-            padding: 15px;
-            border-radius: 10px;
-            text-align: left;
+            display: none; background: rgba(0,0,0,0.85); margin-top: 15px;
+            padding: 15px; border-radius: 10px; text-align: left;
             border-left: 3px solid var(--accent-cyan);
         }
 
         .channel-list ul { list-style: none; }
-        .channel-list li { padding: 7px 0; border-bottom: 1px solid rgba(255,255,255,0.1); font-size: 14px; color: rgba(255,255,255,0.9); }
+        .channel-list li { padding: 7px 0; border-bottom: 1px solid rgba(255,255,255,0.1); font-size: 14px; }
         .btn-volver { font-size: 12px; color: var(--accent-gold); cursor: pointer; display: block; margin-bottom: 10px; text-transform: uppercase; font-weight: bold; }
 
-        /* Carteles de Precio y Demo */
         .price-tag {
-            background: var(--accent-gold);
-            color: var(--stadium-dark);
-            display: inline-block;
-            padding: 15px 40px;
-            border-radius: 10px;
-            font-size: 24px;
-            font-weight: 800;
-            margin-bottom: 20px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            background: var(--accent-gold); color: var(--stadium-dark);
+            display: inline-block; padding: 15px 40px; border-radius: 10px;
+            font-size: 24px; font-weight: 800; margin-bottom: 20px;
         }
 
         .demo-box {
-            background: var(--verde-whatsapp);
-            color: white;
-            padding: 25px;
-            border-radius: 15px;
-            cursor: pointer;
-            display: inline-block;
-            width: 100%;
-            max-width: 500px;
-            text-decoration: none;
-            transition: 0.3s;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            background: var(--verde-whatsapp); color: white; padding: 25px;
+            border-radius: 15px; cursor: pointer; display: inline-block;
+            width: 100%; max-width: 500px; text-decoration: none; transition: 0.3s;
         }
 
-        .demo-box:hover { transform: scale(1.03); box-shadow: 0 0 30px rgba(37, 211, 102, 0.6); }
-        .demo-box h2 { font-family: 'Bebas Neue', sans-serif; font-size: 35px; margin-top: 10px; }
+        .demo-box:hover { transform: scale(1.03); box-shadow: 0 0 30px rgba(37, 211, 102, 0.4); }
+        .demo-box h2 { font-family: 'Bebas Neue', sans-serif; font-size: 35px; }
 
-        /* Botón Flotante */
         .floating-wa {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: var(--verde-whatsapp);
-            width: 60px; height: 60px;
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 30px; color: white;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-            z-index: 100;
-            transition: 0.3s;
+            position: fixed; bottom: 30px; right: 30px;
+            background: var(--verde-whatsapp); width: 60px; height: 60px;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-size: 30px; color: white; box-shadow: 0 4px 15px rgba(0,0,0,0.5); z-index: 100;
         }
-        .floating-wa:hover { transform: scale(1.1) rotate(10deg); }
 
-        footer { margin-top: 60px; padding: 20px; color: rgba(255,255,255,0.4); font-size: 14px; border-top: 1px solid rgba(255,255,255,0.05); }
+        footer { margin-top: 60px; padding: 20px; color: rgba(255,255,255,0.4); font-size: 14px; }
 
-        /* Mostrar lista activa */
         .show { display: block !important; }
     </style>
 </head>
@@ -162,10 +119,9 @@
         </header>
 
         <div class="catalog-grid">
-            <div class="category-card" onclick="toggleList('lista-abierta', event)">
+            <div class="category-card" onclick="toggleList('lista-abierta')">
                 <span class="category-icon">📺</span>
                 <h2 class="category-title">TV Abierta</h2>
-                <p>13 Canales</p>
                 <div id="lista-abierta" class="channel-list">
                     <span class="btn-volver">← Volver</span>
                     <ul>
@@ -176,37 +132,32 @@
                 </div>
             </div>
 
-            <div class="category-card" onclick="toggleList('lista-musica', event)">
+            <div class="category-card" onclick="toggleList('lista-musica')">
                 <span class="category-icon">🎵</span>
                 <h2 class="category-title">Música</h2>
-                <p>8 Canales</p>
                 <div id="lista-musica" class="channel-list">
                     <span class="btn-volver">← Volver</span>
                     <ul>
                         <li>Hit de los 80s</li><li>Hit de los 90s y 20s</li><li>Hit rock</li>
-                        <li>Hit actualidad</li><li>Flow 1</li><li>Flow 2</li><li>Flow 3</li><li>Flow 4</li>
+                        <li>Hit actualidad</li><li>Flow 1 - 2 - 3 y 4</li>
                     </ul>
                 </div>
             </div>
 
-            <div class="category-card" onclick="toggleList('lista-futbol', event)" style="border-color: var(--accent-gold); box-shadow: 0 0 15px rgba(243, 156, 18, 0.2);">
+            <div class="category-card" onclick="toggleList('lista-futbol')" style="border-color: var(--accent-gold);">
                 <span class="category-icon">⚽</span>
                 <h2 class="category-title">Pack Fútbol</h2>
-                <p>17 Canales</p>
                 <div id="lista-futbol" class="channel-list">
                     <span class="btn-volver">← Volver</span>
                     <ul>
-                        <li>Espn premium</li><li>TNT premium</li><li>TYC sports</li><li>Espn 1</li><li>Espn 2</li>
-                        <li>Espn 3</li><li>Espn 4</li><li>Espn 5</li><li>Espn 6</li><li>Espn 7</li><li>Disney</li>
-                        <li>Fox sports</li><li>Fox sports 2</li><li>Fox sports 3</li><li>DSports</li><li>DSports 2</li><li>DSports+</li>
+                        <li>Espn premium</li><li>TNT premium</li><li>TYC sports</li><li>Espn 1 al 7</li><li>Disney</li><li>Fox sports 1, 2 y 3</li><li>DSports 1, 2 y +</li>
                     </ul>
                 </div>
             </div>
 
-            <div class="category-card" onclick="toggleList('lista-hbo', event)">
+            <div class="category-card" onclick="toggleList('lista-hbo')">
                 <span class="category-icon">🎬</span>
                 <h2 class="category-title">HBO</h2>
-                <p>8 Canales</p>
                 <div id="lista-hbo" class="channel-list">
                     <span class="btn-volver">← Volver</span>
                     <ul>
@@ -215,10 +166,9 @@
                 </div>
             </div>
 
-            <div class="category-card" onclick="toggleList('lista-universal', event)">
+            <div class="category-card" onclick="toggleList('lista-universal')">
                 <span class="category-icon">🌟</span>
                 <h2 class="category-title">Universal</h2>
-                <p>5 Canales</p>
                 <div id="lista-universal" class="channel-list">
                     <span class="btn-volver">← Volver</span>
                     <ul>
@@ -227,26 +177,22 @@
                 </div>
             </div>
 
-            <div class="category-card" onclick="toggleList('lista-cine', event)">
+            <div class="category-card" onclick="toggleList('lista-cine')">
                 <span class="category-icon">🎞️</span>
                 <h2 class="category-title">Cine + Documentales</h2>
-                <p>15 Canales</p>
                 <div id="lista-cine" class="channel-list">
                     <span class="btn-volver">← Volver</span>
                     <ul>
-                        <li>Fx</li><li>Cinecanal</li><li>AyE</li><li>Tnt</li><li>Warner</li><li>Comedy central</li><li>Space</li><li>Sony movie</li>
-                        <li>Star Chanel</li><li>AMC</li><li>Animal planet</li><li>NAT geo</li><li>Discovery world</li><li>History</li><li>History 2</li>
+                        <li>Fx</li><li>Cinecanal</li><li>AyE</li><li>Tnt</li><li>Warner</li><li>Comedy central</li><li>Space</li><li>Sony movie</li><li>Star Chanel</li><li>AMC</li><li>Animal planet</li><li>NAT geo</li><li>Discovery world</li><li>History 1 y 2</li>
                     </ul>
                 </div>
             </div>
         </div>
 
-        <div class="price-tag">$3000 PESOS POR MES</div>
-
+        <div class="price-tag">$3000 POR MES</div>
         <br>
-
-        <a href="https://wa.me/5491159517621?text=Hola!%20Quiero%20mi%20demo%20gratis" class="demo-box">
-            <i class="fab fa-whatsapp" style="font-size: 50px;"></i>
+        <a href="https://wa.me/5491159517621?text=Hola!%20Quiero%20pedir%20mi%20demo%20gratis" class="demo-box">
+            <i class="fab fa-whatsapp" style="font-size: 40px; margin-bottom: 10px;"></i>
             <h2>PEDÍ TU DEMO TOTALMENTE GRATIS</h2>
         </a>
 
@@ -260,17 +206,11 @@
     </a>
 
     <script>
-        function toggleList(id, event) {
-            // Cierra todas las listas primero
+        function toggleList(id) {
             const lists = document.querySelectorAll('.channel-list');
-            lists.forEach(list => {
-                if(list.id !== id) list.classList.remove('show');
-            });
-            // Abre o cierra la seleccionada
+            lists.forEach(list => { if(list.id !== id) list.classList.remove('show'); });
             document.getElementById(id).classList.toggle('show');
-            
-            // Evita que el clic se propague y active otros eventos
-            if(event) event.stopPropagation();
+            event.stopPropagation();
         }
     </script>
 </body>
