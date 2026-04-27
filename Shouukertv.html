@@ -9,30 +9,42 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
-            --field-green: #1a4d2e;
+            --stadium-dark: #070f0d; /* Tono más oscuro para el fondo */
             --grass-bright: #2ecc71;
-            --stadium-dark: #0a1612;
             --accent-gold: #f39c12;
             --accent-cyan: #00d9ff;
             --white: #ffffff;
-            --card-bg: rgba(10, 22, 18, 0.9);
+            /* Cartas con más contraste para destacar sobre la imagen */
+            --card-bg: rgba(7, 15, 13, 0.95);
             --verde-whatsapp: #25d366;
         }
 
         body {
             font-family: 'Rajdhani', sans-serif;
-            background: var(--stadium-dark);
+            background-color: var(--stadium-dark);
             color: var(--white);
             min-height: 100vh;
         }
 
-        /* Fondo de Estadio */
+        /* FONTO DE ESTADIO ACTUALIZADO */
         .stadium-background {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -2;
+            /* IMAGEN DE FONDO */
+            background-image: url('https://images.unsplash.com/photo-1521537634199-67368c74c032?q=80&w=2070');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed; /* Efecto Paralaje */
+        }
+
+        /* Superposición oscura para que se lea el texto */
+        .stadium-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
             z-index: -1;
-            background: linear-gradient(180deg, rgba(10,22,18,0.7), var(--stadium-dark)),
-                        radial-gradient(circle, var(--field-green), var(--stadium-dark));
+            background: linear-gradient(180deg, rgba(7, 15, 13, 0.85) 0%, rgba(7, 15, 13, 1) 100%);
         }
 
         .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; text-align: center; }
@@ -44,6 +56,7 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             margin-bottom: 5px;
+            text-shadow: 0 0 20px rgba(46, 204, 113, 0.5);
         }
 
         .tagline { color: var(--accent-gold); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 40px; font-weight: bold; }
@@ -63,13 +76,14 @@
             padding: 30px;
             cursor: pointer;
             transition: 0.3s;
+            backdrop-filter: blur(5px); /* Efecto cristal */
         }
 
-        .category-card:hover { border-color: var(--grass-bright); transform: translateY(-5px); }
+        .category-card:hover { border-color: var(--grass-bright); transform: translateY(-5px); box-shadow: 0 10px 30px rgba(46, 204, 113, 0.2); }
         .category-icon { font-size: 40px; display: block; margin-bottom: 10px; }
         .category-title { font-family: 'Bebas Neue', sans-serif; font-size: 28px; }
 
-        /* Listas de Canales (Ocultas por defecto) */
+        /* Listas de Canales */
         .channel-list {
             display: none;
             background: rgba(0,0,0,0.8);
@@ -81,8 +95,8 @@
         }
 
         .channel-list ul { list-style: none; }
-        .channel-list li { padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,0.1); font-size: 14px; }
-        .btn-volver { font-size: 12px; color: var(--accent-gold); cursor: pointer; display: block; margin-bottom: 10px; text-transform: uppercase; }
+        .channel-list li { padding: 7px 0; border-bottom: 1px solid rgba(255,255,255,0.1); font-size: 14px; color: rgba(255,255,255,0.9); }
+        .btn-volver { font-size: 12px; color: var(--accent-gold); cursor: pointer; display: block; margin-bottom: 10px; text-transform: uppercase; font-weight: bold; }
 
         /* Carteles de Precio y Demo */
         .price-tag {
@@ -94,6 +108,7 @@
             font-size: 24px;
             font-weight: 800;
             margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
 
         .demo-box {
@@ -107,10 +122,11 @@
             max-width: 500px;
             text-decoration: none;
             transition: 0.3s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
 
-        .demo-box:hover { transform: scale(1.03); box-shadow: 0 0 20px rgba(37, 211, 102, 0.4); }
-        .demo-box h2 { font-family: 'Bebas Neue', sans-serif; font-size: 35px; }
+        .demo-box:hover { transform: scale(1.03); box-shadow: 0 0 30px rgba(37, 211, 102, 0.6); }
+        .demo-box h2 { font-family: 'Bebas Neue', sans-serif; font-size: 35px; margin-top: 10px; }
 
         /* Botón Flotante */
         .floating-wa {
@@ -122,11 +138,13 @@
             border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
             font-size: 30px; color: white;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
             z-index: 100;
+            transition: 0.3s;
         }
+        .floating-wa:hover { transform: scale(1.1) rotate(10deg); }
 
-        footer { margin-top: 60px; padding: 20px; color: rgba(255,255,255,0.5); font-size: 14px; }
+        footer { margin-top: 60px; padding: 20px; color: rgba(255,255,255,0.4); font-size: 14px; border-top: 1px solid rgba(255,255,255,0.05); }
 
         /* Mostrar lista activa */
         .show { display: block !important; }
@@ -135,6 +153,7 @@
 <body>
 
     <div class="stadium-background"></div>
+    <div class="stadium-overlay"></div>
 
     <div class="container">
         <header>
@@ -143,7 +162,7 @@
         </header>
 
         <div class="catalog-grid">
-            <div class="category-card" onclick="toggleList('lista-abierta')">
+            <div class="category-card" onclick="toggleList('lista-abierta', event)">
                 <span class="category-icon">📺</span>
                 <h2 class="category-title">TV Abierta</h2>
                 <p>13 Canales</p>
@@ -157,7 +176,7 @@
                 </div>
             </div>
 
-            <div class="category-card" onclick="toggleList('lista-musica')">
+            <div class="category-card" onclick="toggleList('lista-musica', event)">
                 <span class="category-icon">🎵</span>
                 <h2 class="category-title">Música</h2>
                 <p>8 Canales</p>
@@ -170,7 +189,7 @@
                 </div>
             </div>
 
-            <div class="category-card" onclick="toggleList('lista-futbol')" style="border-color: var(--accent-gold);">
+            <div class="category-card" onclick="toggleList('lista-futbol', event)" style="border-color: var(--accent-gold); box-shadow: 0 0 15px rgba(243, 156, 18, 0.2);">
                 <span class="category-icon">⚽</span>
                 <h2 class="category-title">Pack Fútbol</h2>
                 <p>17 Canales</p>
@@ -184,7 +203,7 @@
                 </div>
             </div>
 
-            <div class="category-card" onclick="toggleList('lista-hbo')">
+            <div class="category-card" onclick="toggleList('lista-hbo', event)">
                 <span class="category-icon">🎬</span>
                 <h2 class="category-title">HBO</h2>
                 <p>8 Canales</p>
@@ -196,7 +215,7 @@
                 </div>
             </div>
 
-            <div class="category-card" onclick="toggleList('lista-universal')">
+            <div class="category-card" onclick="toggleList('lista-universal', event)">
                 <span class="category-icon">🌟</span>
                 <h2 class="category-title">Universal</h2>
                 <p>5 Canales</p>
@@ -208,7 +227,7 @@
                 </div>
             </div>
 
-            <div class="category-card" onclick="toggleList('lista-cine')">
+            <div class="category-card" onclick="toggleList('lista-cine', event)">
                 <span class="category-icon">🎞️</span>
                 <h2 class="category-title">Cine + Documentales</h2>
                 <p>15 Canales</p>
@@ -227,7 +246,7 @@
         <br>
 
         <a href="https://wa.me/5491159517621?text=Hola!%20Quiero%20mi%20demo%20gratis" class="demo-box">
-            <i class="fab fa-whatsapp" style="font-size: 40px; margin-bottom: 10px;"></i>
+            <i class="fab fa-whatsapp" style="font-size: 50px;"></i>
             <h2>PEDÍ TU DEMO TOTALMENTE GRATIS</h2>
         </a>
 
@@ -236,12 +255,12 @@
         </footer>
     </div>
 
-    <a href="https://wa.me/5491159517621" class="floating-wa">
+    <a href="https://wa.me/5491159517621" class="floating-wa" target="_blank">
         <i class="fab fa-whatsapp"></i>
     </a>
 
     <script>
-        function toggleList(id) {
+        function toggleList(id, event) {
             // Cierra todas las listas primero
             const lists = document.querySelectorAll('.channel-list');
             lists.forEach(list => {
@@ -249,7 +268,9 @@
             });
             // Abre o cierra la seleccionada
             document.getElementById(id).classList.toggle('show');
-            event.stopPropagation();
+            
+            // Evita que el clic se propague y active otros eventos
+            if(event) event.stopPropagation();
         }
     </script>
 </body>
