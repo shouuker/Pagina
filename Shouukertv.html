@@ -3,15 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ShouukerTV - Tu Canal Deportivo</title>
+    <title>ShouukerTV - Servicio de TV Digital</title>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
             --field-green: #1a4d2e;
             --grass-bright: #2ecc71;
@@ -19,405 +15,242 @@
             --accent-gold: #f39c12;
             --accent-cyan: #00d9ff;
             --white: #ffffff;
-            --card-bg: rgba(10, 22, 18, 0.85);
-            --card-hover: rgba(46, 204, 113, 0.15);
+            --card-bg: rgba(10, 22, 18, 0.9);
+            --verde-whatsapp: #25d366;
         }
 
         body {
             font-family: 'Rajdhani', sans-serif;
             background: var(--stadium-dark);
             color: var(--white);
-            overflow-x: hidden;
             min-height: 100vh;
         }
 
-        /* Estadio de fondo */
+        /* Fondo de Estadio */
         .stadium-background {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            background: 
-                linear-gradient(180deg, 
-                    rgba(10, 22, 18, 0.4) 0%, 
-                    rgba(10, 22, 18, 0.7) 50%,
-                    rgba(10, 22, 18, 0.95) 100%),
-                radial-gradient(ellipse at center, 
-                    var(--field-green) 0%, 
-                    var(--stadium-dark) 100%);
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            background: linear-gradient(180deg, rgba(10,22,18,0.7), var(--stadium-dark)),
+                        radial-gradient(circle, var(--field-green), var(--stadium-dark));
         }
 
-        .stadium-lines {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 80%;
-            height: 60%;
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-        }
-
-        .center-circle {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 200px;
-            height: 200px;
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-        }
-
-        .center-dot {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 8px;
-            height: 8px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 50%;
-        }
-
-        .penalty-area {
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 40%;
-            height: 80px;
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            border-bottom: none;
-        }
-
-        .floodlights {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(ellipse at 20% 20%, rgba(255, 255, 255, 0.03) 0%, transparent 40%),
-                radial-gradient(ellipse at 80% 20%, rgba(255, 255, 255, 0.03) 0%, transparent 40%);
-            pointer-events: none;
-        }
-
-        /* Contenedor principal */
-        .container {
-            position: relative;
-            z-index: 1;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 40px 20px;
-        }
-
-        /* Header con logo */
-        .header {
-            text-align: center;
-            margin-bottom: 60px;
-            position: relative;
-        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; text-align: center; }
 
         .logo {
             font-family: 'Bebas Neue', sans-serif;
-            font-size: 72px;
-            letter-spacing: 4px;
+            font-size: 80px;
             background: linear-gradient(135deg, var(--grass-bright), var(--accent-cyan));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-shadow: 0 0 40px rgba(46, 204, 113, 0.3);
-            margin-bottom: 10px;
-            animation: logoGlow 3s ease-in-out infinite;
+            margin-bottom: 5px;
         }
 
-        @keyframes logoGlow {
-            0%, 100% { filter: brightness(1); }
-            50% { filter: brightness(1.2); }
-        }
+        .tagline { color: var(--accent-gold); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 40px; font-weight: bold; }
 
-        .tagline {
-            font-size: 18px;
-            color: var(--accent-gold);
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            font-weight: 600;
-        }
-
-        .broadcast-line {
-            position: absolute;
-            bottom: -20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 200px;
-            height: 3px;
-            background: linear-gradient(90deg, 
-                transparent, 
-                var(--accent-cyan), 
-                transparent);
-            animation: scanLine 2s linear infinite;
-        }
-
-        @keyframes scanLine {
-            0% { transform: translateX(-200%); }
-            100% { transform: translateX(200%); }
-        }
-
-        /* Grid de catálogo */
+        /* Grid de Categorías */
         .catalog-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 50px;
         }
 
-        /* Tarjetas de categoría */
         .category-card {
             background: var(--card-bg);
-            border: 2px solid rgba(46, 204, 113, 0.2);
-            border-radius: 16px;
-            padding: 40px 30px;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 30px;
             cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            backdrop-filter: blur(10px);
+            transition: 0.3s;
         }
 
-        .category-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, 
-                transparent, 
-                rgba(46, 204, 113, 0.1), 
-                transparent);
-            transition: left 0.6s;
+        .category-card:hover { border-color: var(--grass-bright); transform: translateY(-5px); }
+        .category-icon { font-size: 40px; display: block; margin-bottom: 10px; }
+        .category-title { font-family: 'Bebas Neue', sans-serif; font-size: 28px; }
+
+        /* Listas de Canales (Ocultas por defecto) */
+        .channel-list {
+            display: none;
+            background: rgba(0,0,0,0.8);
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: left;
+            border-left: 3px solid var(--accent-cyan);
         }
 
-        .category-card:hover::before {
-            left: 100%;
-        }
+        .channel-list ul { list-style: none; }
+        .channel-list li { padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,0.1); font-size: 14px; }
+        .btn-volver { font-size: 12px; color: var(--accent-gold); cursor: pointer; display: block; margin-bottom: 10px; text-transform: uppercase; }
 
-        .category-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            border-color: var(--grass-bright);
-            background: rgba(46, 204, 113, 0.1);
-            box-shadow: 
-                0 20px 60px rgba(46, 204, 113, 0.3),
-                0 0 0 1px rgba(46, 204, 113, 0.5);
-        }
-
-        .category-icon {
-            font-size: 48px;
-            margin-bottom: 20px;
-            display: block;
-            animation: float 3s ease-in-out infinite;
-        }
-
-        .category-card:nth-child(1) .category-icon { animation-delay: 0s; }
-        .category-card:nth-child(2) .category-icon { animation-delay: 0.2s; }
-        .category-card:nth-child(3) .category-icon { animation-delay: 0.4s; }
-        .category-card:nth-child(4) .category-icon { animation-delay: 0.6s; }
-        .category-card:nth-child(5) .category-icon { animation-delay: 0.8s; }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-        }
-
-        .category-title {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 32px;
-            letter-spacing: 2px;
-            margin-bottom: 12px;
-            color: var(--white);
-        }
-
-        .category-description {
-            font-size: 15px;
-            color: rgba(255, 255, 255, 0.7);
-            line-height: 1.6;
-            margin-bottom: 20px;
-        }
-
-        .channel-count {
-            display: inline-block;
-            background: linear-gradient(135deg, var(--grass-bright), var(--accent-cyan));
-            color: var(--stadium-dark);
-            padding: 6px 16px;
-            border-radius: 20px;
-            font-weight: 700;
-            font-size: 14px;
-            letter-spacing: 1px;
-        }
-
-        /* Efectos especiales para Pack Fútbol */
-        .football-special {
-            border-color: var(--accent-gold);
-            position: relative;
-        }
-
-        .football-special::after {
-            content: '⚡ DESTACADO';
-            position: absolute;
-            top: -12px;
-            right: 20px;
+        /* Carteles de Precio y Demo */
+        .price-tag {
             background: var(--accent-gold);
             color: var(--stadium-dark);
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 1px;
+            display: inline-block;
+            padding: 15px 40px;
+            border-radius: 10px;
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 20px;
         }
 
-        .football-special:hover {
-            border-color: var(--accent-gold);
-            box-shadow: 
-                0 20px 60px rgba(243, 156, 18, 0.4),
-                0 0 0 1px var(--accent-gold);
+        .demo-box {
+            background: var(--verde-whatsapp);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            cursor: pointer;
+            display: inline-block;
+            width: 100%;
+            max-width: 500px;
+            text-decoration: none;
+            transition: 0.3s;
         }
 
-        /* Corner decorations */
-        .corner-decoration {
-            position: absolute;
-            width: 40px;
-            height: 40px;
-            border: 2px solid rgba(46, 204, 113, 0.3);
+        .demo-box:hover { transform: scale(1.03); box-shadow: 0 0 20px rgba(37, 211, 102, 0.4); }
+        .demo-box h2 { font-family: 'Bebas Neue', sans-serif; font-size: 35px; }
+
+        /* Botón Flotante */
+        .floating-wa {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--verde-whatsapp);
+            width: 60px; height: 60px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 30px; color: white;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            z-index: 100;
         }
 
-        .corner-decoration.top-left {
-            top: 0;
-            left: 0;
-            border-right: none;
-            border-bottom: none;
-            border-radius: 16px 0 0 0;
-        }
+        footer { margin-top: 60px; padding: 20px; color: rgba(255,255,255,0.5); font-size: 14px; }
 
-        .corner-decoration.bottom-right {
-            bottom: 0;
-            right: 0;
-            border-left: none;
-            border-top: none;
-            border-radius: 0 0 16px 0;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .logo {
-                font-size: 48px;
-            }
-
-            .catalog-grid {
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
-
-            .category-card {
-                padding: 30px 20px;
-            }
-        }
-
-        /* Animación de entrada */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .category-card {
-            animation: fadeInUp 0.6s ease-out forwards;
-            opacity: 0;
-        }
-
-        .category-card:nth-child(1) { animation-delay: 0.1s; }
-        .category-card:nth-child(2) { animation-delay: 0.2s; }
-        .category-card:nth-child(3) { animation-delay: 0.3s; }
-        .category-card:nth-child(4) { animation-delay: 0.4s; }
-        .category-card:nth-child(5) { animation-delay: 0.5s; }
+        /* Mostrar lista activa */
+        .show { display: block !important; }
     </style>
 </head>
 <body>
-    <!-- Fondo de estadio -->
-    <div class="stadium-background">
-        <div class="floodlights"></div>
-        <div class="stadium-lines">
-            <div class="center-circle">
-                <div class="center-dot"></div>
-            </div>
-            <div class="penalty-area"></div>
-        </div>
-    </div>
 
-    <!-- Contenido principal -->
+    <div class="stadium-background"></div>
+
     <div class="container">
-        <header class="header">
+        <header>
             <h1 class="logo">SHOUUKERTV</h1>
-            <p class="tagline">Tu pasión deportiva en vivo</p>
-            <div class="broadcast-line"></div>
+            <p class="tagline">Servicio de TV digital</p>
         </header>
 
         <div class="catalog-grid">
-            <!-- TV Abierta -->
-            <div class="category-card">
+            <div class="category-card" onclick="toggleList('lista-abierta')">
                 <span class="category-icon">📺</span>
                 <h2 class="category-title">TV Abierta</h2>
-                <p class="category-description">Los mejores canales de televisión abierta con programación variada para toda la familia</p>
-                <span class="channel-count">25+ CANALES</span>
-                <div class="corner-decoration top-left"></div>
-                <div class="corner-decoration bottom-right"></div>
+                <p>13 Canales</p>
+                <div id="lista-abierta" class="channel-list">
+                    <span class="btn-volver">← Volver</span>
+                    <ul>
+                        <li>Ar|12</li><li>Crónica TV</li><li>A24</li><li>C5N</li><li>La Nacion+</li>
+                        <li>Canal 26</li><li>El nueve</li><li>América TV</li><li>Telefe</li>
+                        <li>TN</li><li>TV pública</li><li>El trece</li>
+                    </ul>
+                </div>
             </div>
 
-            <!-- HBO -->
-            <div class="category-card">
-                <span class="category-icon">🎬</span>
-                <h2 class="category-title">HBO</h2>
-                <p class="category-description">Películas premium, series exclusivas y contenido original de la mejor calidad</p>
-                <span class="channel-count">8 CANALES</span>
-                <div class="corner-decoration top-left"></div>
-                <div class="corner-decoration bottom-right"></div>
-            </div>
-
-            <!-- Universal -->
-            <div class="category-card">
-                <span class="category-icon">🌟</span>
-                <h2 class="category-title">Universal</h2>
-                <p class="category-description">Entretenimiento internacional con los mejores shows y películas del mundo</p>
-                <span class="channel-count">12 CANALES</span>
-                <div class="corner-decoration top-left"></div>
-                <div class="corner-decoration bottom-right"></div>
-            </div>
-
-            <!-- Música -->
-            <div class="category-card">
+            <div class="category-card" onclick="toggleList('lista-musica')">
                 <span class="category-icon">🎵</span>
                 <h2 class="category-title">Música</h2>
-                <p class="category-description">Los mejores videos musicales, conciertos en vivo y programas especiales</p>
-                <span class="channel-count">15 CANALES</span>
-                <div class="corner-decoration top-left"></div>
-                <div class="corner-decoration bottom-right"></div>
+                <p>8 Canales</p>
+                <div id="lista-musica" class="channel-list">
+                    <span class="btn-volver">← Volver</span>
+                    <ul>
+                        <li>Hit de los 80s</li><li>Hit de los 90s y 20s</li><li>Hit rock</li>
+                        <li>Hit actualidad</li><li>Flow 1</li><li>Flow 2</li><li>Flow 3</li><li>Flow 4</li>
+                    </ul>
+                </div>
             </div>
 
-            <!-- Pack Fútbol -->
-            <div class="category-card football-special">
+            <div class="category-card" onclick="toggleList('lista-futbol')" style="border-color: var(--accent-gold);">
                 <span class="category-icon">⚽</span>
                 <h2 class="category-title">Pack Fútbol</h2>
-                <p class="category-description">Todos los partidos en vivo, análisis y contenido exclusivo de las mejores ligas del mundo</p>
-                <span class="channel-count">30+ CANALES</span>
-                <div class="corner-decoration top-left"></div>
-                <div class="corner-decoration bottom-right"></div>
+                <p>17 Canales</p>
+                <div id="lista-futbol" class="channel-list">
+                    <span class="btn-volver">← Volver</span>
+                    <ul>
+                        <li>Espn premium</li><li>TNT premium</li><li>TYC sports</li><li>Espn 1</li><li>Espn 2</li>
+                        <li>Espn 3</li><li>Espn 4</li><li>Espn 5</li><li>Espn 6</li><li>Espn 7</li><li>Disney</li>
+                        <li>Fox sports</li><li>Fox sports 2</li><li>Fox sports 3</li><li>DSports</li><li>DSports 2</li><li>DSports+</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="category-card" onclick="toggleList('lista-hbo')">
+                <span class="category-icon">🎬</span>
+                <h2 class="category-title">HBO</h2>
+                <p>8 Canales</p>
+                <div id="lista-hbo" class="channel-list">
+                    <span class="btn-volver">← Volver</span>
+                    <ul>
+                        <li>Hbo</li><li>HBO2</li><li>HBO Plus</li><li>HBO FAMILY</li><li>HBO Mundi</li><li>HBO Xtreme</li><li>HBO POP</li><li>HBO SIGNATURE</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="category-card" onclick="toggleList('lista-universal')">
+                <span class="category-icon">🌟</span>
+                <h2 class="category-title">Universal</h2>
+                <p>5 Canales</p>
+                <div id="lista-universal" class="channel-list">
+                    <span class="btn-volver">← Volver</span>
+                    <ul>
+                        <li>Universal cinema</li><li>Universal crimen</li><li>Universal reality</li><li>Universal comedy</li><li>Universal premiere</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="category-card" onclick="toggleList('lista-cine')">
+                <span class="category-icon">🎞️</span>
+                <h2 class="category-title">Cine + Documentales</h2>
+                <p>15 Canales</p>
+                <div id="lista-cine" class="channel-list">
+                    <span class="btn-volver">← Volver</span>
+                    <ul>
+                        <li>Fx</li><li>Cinecanal</li><li>AyE</li><li>Tnt</li><li>Warner</li><li>Comedy central</li><li>Space</li><li>Sony movie</li>
+                        <li>Star Chanel</li><li>AMC</li><li>Animal planet</li><li>NAT geo</li><li>Discovery world</li><li>History</li><li>History 2</li>
+                    </ul>
+                </div>
             </div>
         </div>
+
+        <div class="price-tag">$3000 PESOS POR MES</div>
+
+        <br>
+
+        <a href="https://wa.me/5491159517621?text=Hola!%20Quiero%20mi%20demo%20gratis" class="demo-box">
+            <i class="fab fa-whatsapp" style="font-size: 40px; margin-bottom: 10px;"></i>
+            <h2>PEDÍ TU DEMO TOTALMENTE GRATIS</h2>
+        </a>
+
+        <footer>
+            <p>ShouukerTV © 2026</p>
+        </footer>
     </div>
+
+    <a href="https://wa.me/5491159517621" class="floating-wa">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script>
+        function toggleList(id) {
+            // Cierra todas las listas primero
+            const lists = document.querySelectorAll('.channel-list');
+            lists.forEach(list => {
+                if(list.id !== id) list.classList.remove('show');
+            });
+            // Abre o cierra la seleccionada
+            document.getElementById(id).classList.toggle('show');
+            event.stopPropagation();
+        }
+    </script>
 </body>
 </html>
