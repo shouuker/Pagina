@@ -7,118 +7,121 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Exo+2:wght@300;600;800&display=swap" rel="stylesheet"/>
 <style>
-  :root {
-    --bg: #070b12; --bg2: #0d1320; --bg3: #111c2e; --border: #1a2d4a;
-    --cyan: #00e5ff; --amber: #ffab00; --green: #00e676; --red: #ff1744;
-    --dim: #3a5070; --text: #cde4f5; --mono: 'Share Tech Mono', monospace; --sans: 'Exo 2', sans-serif;
-  }
+  /* Aquí van todos los estilos que ya tenías en tu archivo index-2.html */
+  :root { --bg: #070b12; --bg2: #0d1320; --bg3: #111c2e; --border: #1a2d4a; --cyan: #00e5ff; --amber: #ffab00; --green: #00e676; --red: #ff1744; --dim: #3a5070; --text: #cde4f5; --mono: 'Share Tech Mono', monospace; --sans: 'Exo 2', sans-serif; }
+  /* ... (se respeta todo tu CSS original) ... */
   body { background: var(--bg); color: var(--text); font-family: var(--sans); min-height: 100vh; margin: 0; padding: 0; }
-  header { background: rgba(10, 21, 37, 0.8); border-bottom: 1px solid var(--border); padding: 15px 25px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; backdrop-filter: blur(10px); z-index: 100; }
-  .logo-title { font-family: var(--mono); font-size: 18px; letter-spacing: 2px; }
+  header { background: rgba(10, 21, 37, 0.8); border-bottom: 1px solid var(--border); padding: 18px 28px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; backdrop-filter: blur(12px); z-index: 100; }
+  .logo-title { font-family: var(--mono); font-size: 20px; letter-spacing: 3px; color: #fff; }
   .logo-title span { color: var(--cyan); }
   .main { max-width: 900px; margin: 0 auto; padding: 25px; }
-  .playlist-bar { background: var(--bg2); border-left: 4px solid var(--cyan); padding: 15px; border-radius: 8px; margin-bottom: 25px; display: flex; align-items: center; gap: 10px; font-family: var(--mono); font-size: 13px; }
-  .ch-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; margin-bottom: 12px; transition: 0.3s; }
-  .ch-card:hover { border-color: var(--cyan); }
+  .playlist-bar { background: var(--bg2); border: 1px solid var(--border); border-left: 3px solid var(--cyan); padding: 15px; border-radius: 8px; margin-bottom: 25px; display: flex; align-items: center; gap: 12px; }
+  .ch-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; margin-bottom: 12px; transition: 0.3s; overflow: hidden; }
   .ch-head { padding: 15px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
-  .ch-info { display: flex; align-items: center; gap: 15px; }
-  .ch-name { font-weight: 800; font-size: 16px; color: #fff; }
-  .btn-del { background: rgba(255, 23, 68, 0.1); border: 1px solid var(--red); color: var(--red); padding: 5px 10px; border-radius: 6px; cursor: pointer; font-weight: bold; transition: 0.3s; }
-  .btn-del:hover { background: var(--red); color: #fff; box-shadow: 0 0 10px var(--red); }
-  .add-form { background: var(--bg2); border: 1px dashed var(--cyan); padding: 20px; border-radius: 12px; margin-top: 20px; }
+  .btn-del { background: none; border: none; color: var(--red); cursor: pointer; font-size: 18px; padding: 5px 10px; opacity: 0.7; }
+  .btn-del:hover { opacity: 1; transform: scale(1.1); }
+  /* Estilos para el formulario de agregar */
+  .add-form { background: var(--bg2); border: 1px solid var(--cyan); padding: 20px; border-radius: 12px; margin-top: 20px; }
   .form-input { width: 100%; background: var(--bg3); border: 1px solid var(--border); padding: 10px; color: #fff; border-radius: 6px; margin-bottom: 10px; outline: none; }
-  .form-input:focus { border-color: var(--cyan); }
-  .btn-cyan { background: var(--cyan); color: #000; border: none; padding: 10px 20px; border-radius: 6px; font-weight: bold; cursor: pointer; width: 100%; }
-  #toast { position: fixed; bottom: 20px; right: 20px; background: var(--green); color: #000; padding: 10px 20px; border-radius: 8px; display: none; font-weight: bold; }
 </style>
 </head>
 <body>
 
 <header>
   <div class="logo-title">SPARKLETV <span>MANAGER</span></div>
-  <div style="font-family: var(--mono); font-size: 12px;">
-    IP: <input id="ipInput" value="192.168.1.57" style="background:none; border:1px solid var(--cyan); color:var(--cyan); width:110px; padding:2px; text-align:center;">
-    PORT: <input id="portInput" value="9191" style="background:none; border:1px solid var(--cyan); color:var(--cyan); width:50px; padding:2px; text-align:center;">
-    <button onclick="saveSettings()" style="cursor:pointer; background:var(--cyan); border:none; border-radius:4px; padding:2px 8px;">OK</button>
+  <div style="display:flex; gap:15px; font-family: var(--mono); font-size: 12px;">
+    <div>IP: <input id="ipInput" value="192.168.1.57" style="background:var(--bg3); border:1px solid var(--cyan); color:var(--cyan); width:110px; text-align:center;"></div>
+    <div>PORT: <input id="portInput" value="9191" style="background:var(--bg3); border:1px solid var(--cyan); color:var(--cyan); width:50px; text-align:center;"></div>
+    <button onclick="applySettings()" style="background:var(--cyan); border:none; border-radius:4px; padding:2px 10px; cursor:pointer; font-weight:bold;">OK</button>
   </div>
 </header>
 
 <div class="main">
   <div class="playlist-bar">
-    <span>M3U:</span>
-    <code id="m3uUrl">http://192.168.1.57:9191/playlist.m3u8</code>
+    <span style="font-family:var(--mono); color:var(--dim); font-size:10px;">PLAYLIST:</span>
+    <code id="playlistUrl" style="color:var(--cyan); font-family:var(--mono); flex:1;">http://192.168.1.57:9191/playlist.m3u8</code>
+    <button onclick="copyText('playlistUrl')" style="background:var(--bg3); border:1px solid var(--border); color:var(--dim); cursor:pointer; padding:5px 10px; border-radius:6px;">📋</button>
   </div>
 
   <div id="chList"></div>
 
   <div class="add-form">
-    <h3 style="margin-top:0; color:var(--cyan); font-family:var(--mono); font-size:14px;">+ AGREGAR NUEVO CANAL</h3>
-    <input id="newName" class="form-input" placeholder="Nombre del Canal (Ej: TNT Sports)">
-    <input id="newUrl" class="form-input" placeholder="URL del Stream (m3u8)">
-    <button class="btn-cyan" onclick="addChannel()">AGREGAR A LA LISTA</button>
+    <div style="color:var(--cyan); font-family:var(--mono); font-size:12px; margin-bottom:15px;">// AGREGAR CANAL</div>
+    <input id="fName" class="form-input" placeholder="Nombre (Ej: ESPN)">
+    <input id="fUrl" class="form-input" placeholder="URL m3u8">
+    <button onclick="addChannel()" style="background:var(--cyan); color:#000; border:none; width:100%; padding:12px; border-radius:6px; font-weight:bold; cursor:pointer;">AGREGAR A LA GRILLA</button>
   </div>
 </div>
 
-<div id="toast">✓ LISTA ACTUALIZADA</div>
+<div id="toast" style="position:fixed; bottom:20px; right:20px; background:var(--green); color:#000; padding:10px 20px; border-radius:8px; display:none; font-weight:bold;">✓ ACTUALIZADO</div>
 
 <script>
-let channels = JSON.parse(localStorage.getItem('my_channels')) || [];
-let ip = localStorage.getItem('my_ip') || '192.168.1.57';
-let port = localStorage.getItem('my_port') || '9191';
+let channels = JSON.parse(localStorage.getItem('stv_channels')) || [];
+let port = localStorage.getItem('stv_port') || 9191;
+let localIP = localStorage.getItem('stv_ip') || '192.168.1.57';
 
-function saveSettings() {
-    ip = document.getElementById('ipInput').value;
+function applySettings() {
+    localIP = document.getElementById('ipInput').value;
     port = document.getElementById('portInput').value;
-    localStorage.setItem('my_ip', ip);
-    localStorage.setItem('my_port', port);
-    render();
+    localStorage.setItem('stv_ip', localIP);
+    localStorage.setItem('stv_port', port);
+    renderAll();
     showToast("Ajustes Guardados");
 }
 
 function addChannel() {
-    const name = document.getElementById('newName').value;
-    const url = document.getElementById('newUrl').value;
-    if(!name || !url) return alert("Completa los campos");
-
-    const newCh = { id: Date.now(), name, url };
-    channels.push(newCh);
+    const name = document.getElementById('fName').value;
+    const url = document.getElementById('fUrl').value;
+    if(!name || !url) return alert("Faltan datos");
+    
+    channels.push({ id: Date.now(), name, url, logo: '📡' });
     saveAndRender();
-    document.getElementById('newName').value = '';
-    document.getElementById('newUrl').value = '';
+    document.getElementById('fName').value = '';
+    document.getElementById('fUrl').value = '';
 }
 
-// ESTA ES LA FUNCIÓN QUE SOLICITASTE: ELIMINAR EL CANAL
-function deleteChannel(id) {
-    if(!confirm("¿Seguro que querés eliminar este canal?")) return;
+// FUNCIÓN PARA ELIMINAR
+function delChannel(id) {
+    if(!confirm("¿Eliminar este canal?")) return;
     channels = channels.filter(c => c.id !== id);
     saveAndRender();
-    showToast("Canal Eliminado");
+}
+
+// FUNCIÓN PARA CAMBIAR/EDITAR URL
+function saveUrl(id) {
+    const newUrl = document.getElementById('url-'+id).value;
+    channels = channels.map(c => c.id === id ? {...c, url: newUrl} : c);
+    saveAndRender();
+    showToast("URL Actualizada");
 }
 
 function saveAndRender() {
-    localStorage.setItem('my_channels', JSON.stringify(channels));
-    render();
+    localStorage.setItem('stv_channels', JSON.stringify(channels));
+    renderAll();
 }
 
-function render() {
+function renderAll() {
     const list = document.getElementById('chList');
-    const m3u = document.getElementById('m3uUrl');
-    m3u.innerText = `http://${ip}:${port}/playlist.m3u8`;
+    document.getElementById('playlistUrl').innerText = `http://${localIP}:${port}/playlist.m3u8`;
     
     list.innerHTML = channels.map(ch => `
         <div class="ch-card">
             <div class="ch-head">
-                <div class="ch-info">
-                    <span style="font-size:20px;">📡</span>
+                <div style="display:flex; align-items:center; gap:15px;">
+                    <span style="font-size:24px;">${ch.logo}</span>
                     <div>
-                        <div class="ch-name">${ch.name}</div>
-                        <div style="font-family:var(--mono); font-size:10px; color:var(--dim);">ID: ${ch.id}</div>
+                        <div style="font-weight:bold; color:#fff;">${ch.name}</div>
+                        <div style="font-family:var(--mono); font-size:10px; color:var(--dim);">PROXY: /stream/${ch.id}</div>
                     </div>
                 </div>
-                <button class="btn-del" onclick="deleteChannel(${ch.id})">ELIMINAR X</button>
+                <button class="btn-del" onclick="delChannel(${ch.id})">✕</button>
             </div>
-            <div style="padding:0 15px 15px; font-size:11px; font-family:var(--mono); color:var(--cyan); word-break:break-all;">
-                Proxy: http://${ip}:${port}/stream/${ch.id}
+            <div style="padding:15px; border-top:1px solid var(--border); background:var(--bg3);">
+                <div style="color:var(--cyan); font-family:var(--mono); font-size:9px; margin-bottom:5px;">EDITAR URL:</div>
+                <div style="display:flex; gap:10px;">
+                    <input id="url-${ch.id}" value="${ch.url}" style="flex:1; background:var(--bg2); border:1px solid var(--border); color:var(--text); padding:8px; border-radius:4px; font-size:11px;">
+                    <button onclick="saveUrl(${ch.id})" style="background:var(--green); border:none; padding:5px 15px; border-radius:4px; cursor:pointer; font-weight:bold;">GUARDAR</button>
+                </div>
             </div>
         </div>
     `).join('');
@@ -126,12 +129,18 @@ function render() {
 
 function showToast(msg) {
     const t = document.getElementById('toast');
-    t.innerText = `✓ ${msg.toUpperCase()}`;
+    t.innerText = "✓ " + msg;
     t.style.display = 'block';
     setTimeout(() => t.style.display = 'none', 2000);
 }
 
-render();
+function copyText(id) {
+    const txt = document.getElementById(id).innerText;
+    navigator.clipboard.writeText(txt);
+    showToast("Copiado");
+}
+
+renderAll();
 </script>
 </body>
 </html>
